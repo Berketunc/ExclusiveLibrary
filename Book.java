@@ -7,14 +7,19 @@ public class Book
     private String comments;
     private int rating;
 
-    public Book(int id, String title, String author, String dateFinished, String comments, int rating) 
+    public Book(String title, String Author, String dateFinished, String comments, int rating) 
     {
-        this.id = id;
         this.title = title;
-        this.Author = author;
+        this.Author = Author;
         this.dateFinished = dateFinished;
         this.comments = comments;
         this.rating = rating;
+
+    }
+
+    public Book(int id, String title, String author, String dateFinished, String comments, int rating) {
+        this(title, author, dateFinished, comments, rating);
+        this.id = id;
     }
 
     // For UI

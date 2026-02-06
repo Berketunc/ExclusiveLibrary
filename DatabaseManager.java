@@ -7,6 +7,12 @@ public class DatabaseManager
     private static final String URL = "jdbc:sqlite:library.db";
 
     public DatabaseManager() {
+        try {
+            Class.forName("org.sqlite.JDBC");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
         try (Connection conn = DriverManager.getConnection(URL)) 
         {
             String sql = "CREATE TABLE IF NOT EXISTS books (" +
@@ -34,6 +40,16 @@ public class DatabaseManager
         } catch (SQLException e) { e.printStackTrace(); }
     }
 
+    public void deleteBook(int id) {
+    String sql = "DELETE FROM books WHERE id = ?";
+    try (Connection conn = DriverManager.getConnection(URL);
+         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        pstmt.setInt(1, id);
+        pstmt.executeUpdate();
+    } catch (SQLException e) { e.printStackTrace(); }
+    }
+    
+
     public List<Book> getAllBooks() 
     {
         List<Book> books = new ArrayList<>();
@@ -49,4 +65,5 @@ public class DatabaseManager
         } catch (SQLException e) { e.printStackTrace(); }
         return books;
     }
+
 }
